@@ -1,126 +1,95 @@
-# PokerAI_Sim
- 
-# NLTH Poker Agent using Counterfactual Regret Minimization
+# Poker Agent using MCCFR
 
-* Trains strategies for Kuhn-, Leduc- and Texas Holdem Poker
+* Trains strategies for a simple Poker
 * Supported Training methods:
   * External Sampling
   * Chance Sampling
-  * Outcome Sampling
+* The simple Poke rule:
+  * the game contain 6 cards(1,2,3,4,5,6)
+  * the game take action rule is the same as Holdem.
+  * The game is divided into three rounds:
+    * In every round, one 'fold' lead to the game ending, and all players take 'call' action, which is simular to Holdem.
+    * first round: every player have one hole card and they interactively take action.
+    * second round: deal two community cards and they interactively take action by Holdem rule.
+    * third round : deal one community card. If all player call. The player who have highest hand strength win all pot.
+    * hand strength: every player combine one his one hole card with three community cards as the total of four cards.Hand strength is the max hand strength of three cards selected from the four cards.
+    (456 > 345 > 234 > 123 > 6 > 5 > 4 > 3 > 2 > 1) 
 
 ## Requirements
-* Clang (For C++11 support)
-* Boost Programmoptions 1.55+
+* For C++11 support
+* GraphViz software
 
 ## Installation
-* Clone repositories and copy HandRanks.dat into cfrm:
+* Clone repositories:
 ```
-$ git clone https://github.com/pandaant/cfrm.git
-$ git clone https://github.com/christophschmalhofer/poker.git
-$ cp poker/XPokerEval/XPokerEval.TwoPlusTwo/HandRanks.dat cfrm/handranks.dat
-$ #rm -r poker # was only needed for handranks.dat
+$ git clone https://github.com/zqbAse/PokerAI_Sim.git
 ```
-* Compile required libraries:
+
+* Compile and Run:
 ```shell
-$ cd cfrm/lib
-$ cd libpoker && make && cd ..
-$ cd libecalc && make && cd ..
+$ cd zqbAse/PokerAI_Sim
+$ g++ blueprint.cpp -o blueprint.o -std=c++11
+$ ./blueprint.o
 ```
-* Compile EHS tool and generate Expected Handstrength table (EHS.dat):
-```shell
-$ cd cfrm/tools/ehs_gen
-# tweak values for number of threads and number of samples in src/gen_eval_table.cpp if neccessary
-$ make
-$ ./gen_eval_table #( may take some time! )
-$ mv ehs.dat ../../ehs.dat
-```
-* Build agent binaries
-```shell
-$ cd cfrm 
-$ make
-```
+
 
 ## Usage
 If the build process was successful 4 binaries have been created:
 
-* ./cfrm is the main executable that trains a strategy.
-* ./cluster-abs generates card abstractions based of different metrics ( explained below ).
-* ./potential-abs generates a potential based card abstraction based on a precalculated cluster abstraction.
-* ./player can be used to play the agent against itself or other agents ( The server can be found [here](http://www.computerpokercompetition.org/repos/project_acpc_server/trunk/). )
+* ./Poker is the foundation class of the poker game.
+* ./Util have one class of generateing random number.
+* ./Tree contain data structure of tree node, bulid game tree, compute game tree exploitability, save and load game tree policy, and visualize game tree code.
+*  blueprin.cpp is main algorithm of mccfr.
 
-* The scripts folder contains example scripts to generate abstractions and strategies for different games.
+## Poker folder
 
-### Action Abstraction
+the foundation class of the poker game. 
+##### Card.h
+* every card class, it's id range from 0 to 5, which map figure 1 to 6.
+##### Deck.h
+* deck class of cards, it contains 6 cards.
+##### Engine.h
+* it compute game result, judging win person and the person can get the number of chips.
+##### Player.h
+* player class,it's attributes contain initial chips, bet chips, small or big blind. 
+it's functions contain raise, call and fold.
+##### Table.h
+* it's attributes contain players, pot and community cards.
+##### State.h
+it is game state, contain every players infoset.  
+* constructor function contian deal every player hole card, three community cards and have mapped (hole card,community cards) to a branch in chance node.
+* function **reset_game()** is reset game to initial game.  
+* function **move_to_next_player()** is that after a player takes action, turning to next player who can take action.  
+* function **reset_betting_round_state()** is to control raise chips and check situation.  
+* function **is_terminal()** is to judge game over, including one player remained or river round over.  
+* function **payout(int i)** is to compute player i winning or losing chips.  
+* function **apply_action(char actionstr)** is that when a player take action, game state is change.  
+* function **increment_stage()** is that when every game round over, turning to next round.  
+* function **legal_actions()** is to return legal actions in current state. 
 
-A action abstraction discretizes the range of betting possibilities a player may choose from.
-This abstraction can reduce the number of states drastically. 
-
-* NullActionAbstraction 
-* PotRelationAbstraction
-
-### Card Abstraction
-
-NLTH has a large number of chance events due to private-card dealings preflop and public-card
-dealings post-flop. To reduce the number of outcomes that a chance event may result in, card
-combinations that are similar in strength are combined into buckets. These buckets are then
-used as new chance events in the abstract game.
-
-#### NullCardAbstraction
-#### BlindCardAbstraction
-#### ClusterCardAbstractions
-* SI
-
-* EHS - Expected Hand Strength
-
-  E[HS] or E[HS 2] metric groups hands into buckets.
-  Although E[HS] is a good first estimator it can’t distinguish between hands that realize their
-  expectation in different stages of the game.
-
-* EMD - Earth Movers Distance
-
-* OCHS - Opponent Cluster Hand Strength
-
-  OCHS can only be applied to the River phase. The E[HS] value is the probability to win against a random
-  distribution of opponent holdings. OCHS splits the opponents possible holdings into n buckets.
-  Each index in the histogram then corresponds to the probability of winning against hands that
-  are in the bucket with the same index.
-
-  OCHS can be used cluster river hands using a distribution-aware approach. It has been shown
-  that OCHS based river abstractions outperformed expectation based abstractions.
-
-* Mixed Abstractions
-
-  N stands for no abstraction, S for E[HS ], E for EMD clustering over histograms, O for OCHS and P for
-  the potential aware abstraction. The Ordering of the letters determines which abstraction is used in which phase of the game (preflop, flop, turn, river).
-
-  * MIXED_NEEO
-  * MIXED_NEES
-  * MIXED_NSSS
-  * MIXED_NOOO
-
-### Sampling Schemes
-
-* ChanceSampling
-
-  Chance sampled CFR randomly selects private and public chance events. The portion of the
-  game-tree that is reachable through the sampled chance events is traversed recursively. A vector
-  of probabilities is passed from the root down the tree containing the probability of each players
-  contribution to reach the current node in the tree. In all reached terminal nodes the utility can
-  be calculated in O(1).
-
-* ExternalSampling
-
-  External sampling only samples factors that are external to the player, namely chance nodes
-  and opponents actions. It has been proven that external sampling only requires a constant
-  factor more iterations in contrast to vanilla CFR. It still archives an asymptotic improvement in
-  equilibrium computation time because of an order reduction in cost per iteration. External
-  sampling performs a post-order depth-first traversal during an iteration.
-
-* OutcomeSampling
-
-  Outcome sampling only visits one terminal history in each iteration and updates the
-  regrets in information sets visited along the path traversed.
-
-### Action Translation 
-
-* PseudoHarmonicMapping
+### Tree folder
+##### Node.h
+* data structure of every node in game tree.
+##### Bulid_Tree.h
+* traverse every possible hole card, community cards and legal actions to bulid the game tree.
+##### Exploitability.h
+* it compute the exploitability of game tree policy.
+##### Save_load.h
+* save or load the game tree policy. 
+it's functions contain raise, call and fold.
+##### Visualize_Tree.h
+* Visualize game Tree.After the game run out, current folder will generate a 'blueprint_sim.stgy' file.
+```shell
+$ cd GraphViz/bin
+$ dot -Tpng blueprint_sim.stgy > temp.png
+```
+* temp.png is the game tree.
+### Part of Tree for player 0 exploiting player 1
+![百度](img/partoftree.png "百度图片")
+* red node is new round node by dealing card from chance node. 
+* black and red node is player 0 who need to take action.
+* blue is player 1 who need to take action.
+* the value in the node is best response value for player 1.
+* red node '1243' is current player hole card '1',flop community cards'24',turn community cards'3'.
+* 'd':fold,'l':call,'n':allin.
+* the number of edge is the possibilitiy of the action. 100 is 100%, 50 is 50%.
