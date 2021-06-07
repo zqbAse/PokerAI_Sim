@@ -85,7 +85,7 @@ $ dot -Tpng blueprint_sim.stgy > temp.png
 ```
 * temp.png is the game tree.
 ### Part of Tree for player 0 exploiting player 1
-![百度](img/partoftree.png "百度图片")
+![百度](img/partoftree.png)
 * red node is new round node by dealing card from chance node. 
 * black and red node is player 0 who need to take action.
 * blue is player 1 who need to take action.
