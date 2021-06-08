@@ -3,6 +3,9 @@
 #include "Node.h"
 #include <fstream>
 
+/// <summary>
+/// 根据文件数据结构构建博弈树
+/// </summary>
 ofstream fout;
 void dfs_write(strategy_node* cnode) {		//save strategy
 	unsigned char len = cnode->action_len;
@@ -23,7 +26,9 @@ void dump(strategy_node* root) {
 	dfs_write(root);
 	fout.close();
 }
-
+/// <summary>
+/// 保存博弈树的策略到文件
+/// </summary>
 ifstream fin;
 void bulid_bluestrategy(strategy_node* cnode) {
 	unsigned char len;

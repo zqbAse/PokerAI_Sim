@@ -4,17 +4,17 @@
 using namespace std;
 
 struct strategy_node {		//info set node
-	int playerid, bestresponse;
-	bool chanced;
-	int chancenode_id;
-	int chancempde_cards;
-	int action_len = 0;
-	char* actionstr;
-	double* regret;
+	int playerid;	//playerid: 0表示0号玩家，1表示1号玩家
+	int bestresponse; //求玩家的bestreponse值	
+	bool chanced;		//当前节点是否为chance noed
+	int chancempde_cards;	
+	int action_len = 0;		//当前信息集下legal action的长度或者chance node节点的child node个数
+	char* actionstr;		//player 动作节点的动作集合，其中'd'(flod),'l'(call),'n'(allin)
+	double* regret;			//player 动作节点的动作对应的后悔值集合
 	//int* ave_strategy;
-	strategy_node* actions;
-	strategy_node() :action_len(0), chancenode_id(0), chanced(false) {}
-	strategy_node* findnode(char action) {
+	strategy_node* actions;	//当前信息集下做动作或者，chance node发牌后下一个信息集的节点集合
+	strategy_node() :action_len(0), chanced(false) {}
+	strategy_node* findnode(char action) {		//寻找执行动作action后的下一个信息集的节点
 		int i = 0;
 		for (; i < action_len; i++) {
 			if (*(actionstr + i) == action)
@@ -22,7 +22,7 @@ struct strategy_node {		//info set node
 		}
 		return (actions + i);
 	}
-	void init_child(char* action_str) {
+	void init_child(char* action_str) {		
 		if (action_len == 0) {
 			actionstr = action_str;
 			int aclen = strlen(action_str);
@@ -37,60 +37,6 @@ struct strategy_node {		//info set node
 			//regret = new int[initlen] {0};
 			action_len = initlen;
 		}
-	}
-};
-class Sim_State {
-public:
-	int initial_chips;
-	int last_raise, pot, curplayer, foldp;
-	int rivercluster;
-	int players_betchips, betting_stage;
-	Sim_State(int big_small_blind) {
-		reset_game(big_small_blind);
-	}
-	void reset_game(int big_small_blind) {
-		initial_chips = 400;
-		betting_stage = -1;
-		foldp = -1;
-		last_raise = 50;//every round last raise
-		curplayer = 0; //current action player id
-		pot = 150;//current raise time
-		rivercluster = -1;
-		players_betchips = big_small_blind;
-	}
-	void reset_betting_round_state() {
-		last_raise = 0;
-		curplayer = 0;
-	}
-	void move_to_next_player() {
-		curplayer ^= 1;
-	}
-	void take_action(char actionstr, int playeri) {
-		int paychips = 0;
-		if (actionstr == 'l') {
-			paychips = last_raise;
-			last_raise = 0;
-		}
-		else if (actionstr == 'd')
-			foldp = curplayer;
-		else if (actionstr == 'n') {
-			paychips = last_raise;
-			last_raise = initial_chips - (pot + last_raise) / 2;
-			paychips += last_raise;
-		}
-		else {
-			cout << "action:" << actionstr << ",not exist the action" << endl;
-			throw exception();
-		}
-		pot += paychips;
-		if (curplayer != playeri)
-			players_betchips += paychips;
-		if (pot > 2 * initial_chips || players_betchips > initial_chips) {
-			cout << "pot:" << pot << endl;
-			cout << "players_betchips:" << players_betchips << endl;
-			throw exception();
-		}
-		move_to_next_player();
 	}
 };
 /*void calculate_strategy(int* regret, int len, double sigma[]) {
@@ -109,7 +55,7 @@ public:
 		for (int i = 0; i < len; i++)
 			sigma[i] = 1.0 / len;
 }*/
-void calculate_strategy(double* regret, int len, double sigma[]) {
+void calculate_strategy(double* regret, int len, double sigma[]) {		//根据动作集的后悔值计算sigma[a]
 	double sum = 0;
 	for (int i = 0; i < len; i++) {
 		if (regret[i] > 0)

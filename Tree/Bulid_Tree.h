@@ -6,7 +6,13 @@
 extern std::map<int, int>::iterator it;
 map<int, int> mapcluster;
 void bulid_subtree(strategy_node* node, Pokerstate state, int cards[7], int community_cards[]);
-
+/// <summary>
+/// 构建turn chance node的child node
+/// </summary>
+/// <param name="chancenode"></param>
+/// <param name="state"></param>
+/// <param name="cards"></param>
+/// <param name="community_cards"></param>
 void bulid_turn(strategy_node* chancenode, Pokerstate state, int cards[4], int community_cards[]) {
 	chancenode->playerid = state.player_i_index;
 	int cardlen = card_rule_len - 3;
@@ -26,12 +32,18 @@ void bulid_turn(strategy_node* chancenode, Pokerstate state, int cards[4], int c
 			if (cards[t1] != cards[i])
 				tempcards[cnt++] = cards[t1];
 		assert(cnt == card_rule_len - 4);
-		chancenode->actions[curi].chancenode_id = cards[i];
 		chancenode->actions[curi].chancempde_cards = (community_cards[0] + 1) * 1000 + (community_cards[1] + 1) * 100 + (community_cards[2] + 1) * 10 + (cards[i] + 1);
 		bulid_subtree(chancenode->actions + curi, state, tempcards, community_cards);
 		curi++;
 	}
 }
+/// <summary>
+/// 构建flop chance node的child node
+/// </summary>
+/// <param name="chancenode"></param>
+/// <param name="state"></param>
+/// <param name="cards"></param>
+/// <param name="community_cards"></param>
 void bulid_flop(strategy_node* chancenode, Pokerstate state, int cards[7], int community_cards[]) {
 	chancenode->playerid = state.player_i_index;
 	int cardlen = card_rule_len - 1;
@@ -52,7 +64,6 @@ void bulid_flop(strategy_node* chancenode, Pokerstate state, int cards[7], int c
 				if (cards[t1] != cards[i] && cards[t1] != cards[j])
 					tempcards[cnt++] = cards[t1];
 			assert(cnt == card_rule_len - 3);
-			chancenode->actions[curi].chancenode_id = cards[i] * 9 + cards[j];
 			chancenode->actions[curi].chancempde_cards = (community_cards[0] + 1) * 100 + (cards[i] + 1) * 10 + (cards[j] + 1);
 			community_cards[1] = cards[i];
 			community_cards[2] = cards[j];
@@ -62,6 +73,11 @@ void bulid_flop(strategy_node* chancenode, Pokerstate state, int cards[7], int c
 		}
 	}
 }
+/// <summary>
+/// 构建preflop chance node的child node
+/// </summary>
+/// <param name="root"></param>
+/// <param name="state"></param>
 void bulid_preflop(strategy_node* root, Pokerstate state) {
 	int cardlen = card_rule_len;
 	root->chanced = true;
@@ -81,13 +97,19 @@ void bulid_preflop(strategy_node* root, Pokerstate state) {
 			if (t1 != i)
 				tempcards[cnt++] = t1;
 		assert(cnt == card_rule_len - 1);
-		root->actions[curi].chancenode_id = i;
 		root->actions[curi].chancempde_cards = (i + 1);
 		community_cards[0] = i;
 		bulid_subtree(root->actions + curi, state, tempcards, community_cards);
 		curi++;
 	}
 }
+/// <summary>
+/// 构建玩家动作节点的child node
+/// </summary>
+/// <param name="node"></param>
+/// <param name="state"></param>
+/// <param name="cards"></param>
+/// <param name="community_cards"></param>
 void bulid_subtree(strategy_node* node, Pokerstate state, int cards[7], int community_cards[]) {
 	node->playerid = state.player_i_index;
 	if (state.is_ending())
