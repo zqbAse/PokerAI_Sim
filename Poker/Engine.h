@@ -10,7 +10,7 @@ public:
 	Engine() { }
 		
 
-	void sortp(unsigned char evalcards[], int len) {
+	void sortp(unsigned char evalcards[], int len) {//排序
 		for (int i = 0; i < len - 1; i++) {
 			for (int j = 0; j < len - 1 - i; j++) {
 				if (evalcards[j] > evalcards[j + 1]) {
@@ -21,7 +21,7 @@ public:
 			}
 		}
 	}
-	unsigned char Maxstrength(Card hand, Card community[]) {
+	unsigned char Maxstrength(Card hand, Card community[]) {		//找最大hand strength
 		unsigned char cards[4] = { hand.eval_card ,community[0].eval_card ,community[1].eval_card ,community[2].eval_card };
 		int len = 4;
 		sortp(cards, len);
@@ -40,7 +40,7 @@ public:
 		}
 		return cards[len - 1];
 	}
-	unsigned char Maxstrength(int hand, int community[]) {
+	unsigned char Maxstrength(int hand, int community[]) {//找最大hand strength
 		unsigned char cards[4] = { hand ,community[0] ,community[1] ,community[2] };
 		int len = 4;
 		sortp(cards, len);
@@ -61,7 +61,7 @@ public:
 		}
 		return cards[len - 1];
 	}
-	void compute_winner(PokerTable& table) {
+	void compute_winner(PokerTable& table) {//计算玩家输赢
 		if (table.community_cards_number != 3) {
 			cout << "community_cards_number error" << table.community_cards_number << endl;
 			throw exception();
