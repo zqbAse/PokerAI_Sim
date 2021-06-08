@@ -32,7 +32,30 @@ $ g++ blueprint.cpp -o blueprint.o -std=c++11
 $ ./blueprint.o
 ```
 
-
+##Project Frameworks
+```
+├── Tree            # game tree code
+│   ├── Node.h              # data structure of every node in game tree
+│   ├── Bulid_Tree.h        # traverse every possible hole card, community cards and legal actions to bulid the game tree
+│   ├── Exploitability.h    # it compute the exploitability of game tree policy
+│   ├── Save_load.h         # it can save game tree policy to a file and load file to bulid a game tree
+│   └── Visualize_Tree.h    # Visualize game Tree
+│
+├── Util            # 
+│   └── Randint.h           # the class is to generate random number
+│
+├── img             # game tree figure
+│
+├── Poker           # the foundation class of the poker game
+│   ├── Card.h              # every card class, it's id range from 0 to 5, which map figure 1 to 6
+│   ├── Deck.h              # deck class of cards, it contains 6 cards
+│   ├── Engine.h            # it compute game result, judging win person and the person can get the number of chips
+│   ├── Player.h            # player class,it's attributes contain initial chips, bet chips, small or big blind
+│   ├── Table.h             # it's attributes contain players, pot and community cards
+│   └── State.h             # it is game state, contain every players infoset
+│
+└── blueprint.cpp   # it is main algorithm of mccfr
+```
 ## Usage
 If the build process was successful 4 binaries have been created:
 
@@ -41,7 +64,7 @@ If the build process was successful 4 binaries have been created:
 * ./Tree contain data structure of tree node, bulid game tree, compute game tree exploitability, save and load game tree policy, and visualize game tree code.
 *  blueprin.cpp is main algorithm of mccfr.
 
-## Poker folder
+## The Detail of Poker folder
 
 the foundation class of the poker game. 
 ##### Card.h
@@ -67,7 +90,7 @@ it is game state, contain every players infoset.
 * function **increment_stage()** is that when every game round over, turning to next round.  
 * function **legal_actions()** is to return legal actions in current state. 
 
-### Tree folder
+### The Detail of Poker folder
 ##### Node.h
 * data structure of every node in game tree.
 ##### Bulid_Tree.h
@@ -76,7 +99,7 @@ it is game state, contain every players infoset.
 * it compute the exploitability of game tree policy.
 ##### Save_load.h
 * save or load the game tree policy. 
-it's functions contain raise, call and fold.
+it can save game tree policy to a file and load file to bulid a game tree.
 ##### Visualize_Tree.h
 * Visualize game Tree.After the game run out, current folder will generate a 'blueprint_sim.stgy' file.
 ```shell
