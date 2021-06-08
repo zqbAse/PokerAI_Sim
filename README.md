@@ -83,7 +83,7 @@ it is game state, contain every players infoset.
 * function **increment_stage()** is that when every game round over, turning to next round.  
 * function **legal_actions()** is to return legal actions in current state. 
 
-### The Detail of Poker folder
+## The Detail of Poker folder
 ##### Node.h
 * data structure of every node in game tree.
 ##### Bulid_Tree.h
@@ -100,7 +100,7 @@ $ cd GraphViz/bin
 $ dot -Tpng blueprint_sim.stgy > temp.png
 ```
 * temp.png is the game tree.
-### Part of Tree for player 0 exploiting player 1
+## Part of Tree for player 0 exploiting player 1
 ![百度](img/partoftree.png)
 * red node is new round node by dealing card from chance node. 
 * black and red node is player 0 who need to take action.
