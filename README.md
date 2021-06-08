@@ -56,13 +56,6 @@ $ ./blueprint.o
 │
 └── blueprint.cpp   # it is main algorithm of mccfr
 ```
-## Usage
-If the build process was successful 4 binaries have been created:
-
-* ./Poker is the foundation class of the poker game.
-* ./Util have one class of generateing random number.
-* ./Tree contain data structure of tree node, bulid game tree, compute game tree exploitability, save and load game tree policy, and visualize game tree code.
-*  blueprin.cpp is main algorithm of mccfr.
 
 ## The Detail of Poker folder
 
