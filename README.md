@@ -32,7 +32,7 @@ $ g++ blueprint.cpp -o blueprint.o -std=c++11
 $ ./blueprint.o
 ```
 
-##Project Frameworks
+## Project Frameworks
 ```
 ├── Tree            # game tree code
 │   ├── Node.h              # data structure of every node in game tree
