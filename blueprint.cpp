@@ -7,10 +7,10 @@
 using namespace std;
 
 /// <summary>
-/// card_rule_len: æ‰‹ç‰Œçš„ä¸ªæ•°ï¼Œè¯¥ç¨‹åºæ‰‹ç‰Œ6ä¸ª(0-5)ï¼Œä¸ç”»å›¾ä¸­1-6æ‰‹ç‰Œå¯¹åº”
-/// cardlen3 = 1000ï¼Œ cardlen2 = 100ï¼Œ cardlen1 = 10
-/// è¿™ä¸‰ä¸ªå˜é‡ä½œç”¨æ˜¯ä¸€ä¸ªç©å®¶hole cardä¸º'2'ï¼Œflop community cardsä¸º'13'ï¼Œturn community cardä¸º'5'
-/// é‚£ä¹ˆè¯¥ç©å®¶å†å²æ‰‹ç‰Œä¿¡æ¯ä¸º'2135'ï¼Œä¸ºäº†æ ¹æ®æ‰‹ç‰Œæ„å»ºè¿™ä¸ªå†å²æ‰‹ç‰Œä¿¡æ¯ hole card * 1000 + flop community cards[0] * 100 + flop community cards[1] * 10 + turn community card
+/// card_rule_len: ÊÖÅÆµÄ¸öÊı£¬¸Ã³ÌĞòÊÖÅÆ6¸ö(0-5)£¬Óë»­Í¼ÖĞ1-6ÊÖÅÆ¶ÔÓ¦
+/// cardlen3 = 1000£¬ cardlen2 = 100£¬ cardlen1 = 10
+/// ÕâÈı¸ö±äÁ¿×÷ÓÃÊÇÒ»¸öÍæ¼Òhole cardÎª'2'£¬flop community cardsÎª'13'£¬turn community cardÎª'5'
+/// ÄÇÃ´¸ÃÍæ¼ÒÀúÊ·ÊÖÅÆĞÅÏ¢Îª'2135'£¬ÎªÁË¸ù¾İÊÖÅÆ¹¹½¨Õâ¸öÀúÊ·ÊÖÅÆĞÅÏ¢ hole card * 1000 + flop community cards[0] * 100 + flop community cards[1] * 10 + turn community card
 /// </summary>
 extern const int card_rule_len;
 extern const int cardlen3;
@@ -18,160 +18,160 @@ extern const int cardlen2;
 extern const int cardlen1;
 
 /// <summary>
-/// mapcluster: æ˜¯åœ¨chance nodeæ—¶å€™æ ¹æ®å…¬å…±ç‰Œæ˜ å°„å½“å‰æ‰‹ç‰Œå±äºå“ªä¸€ä¸ªç±»åˆ«.
-/// ä¸¾ä¾‹è¯´æ˜ï¼šå‡è®¾player1 hole cardä¸º'2',åœ¨prelopç»“æŸåå‘flop community cards,è¿™ä¸ª community cardså¯èƒ½æ˜¯'13','14','15','16','34','35','36','45'....ï¼ˆä»å°åˆ°å¤§æ’åºï¼‰å½“ä¸­ä»»ä½•ä¸€ç§
-/// å‡è®¾å‘å‡ºçš„æ‰‹ç‰Œä¸º'13'é‚£ä¹ˆåŠ ä¸Šç©å®¶çš„hole cardå¾—åˆ°çš„å†å²æ‰‹ç‰Œä¸º'213'é‚£ä¹ˆmapcluster[213] = 0, mapcluster[215] = 2, mapcluster[234] = 4
+/// mapcluster: ÊÇÔÚchance nodeÊ±ºò¸ù¾İ¹«¹²ÅÆÓ³Éäµ±Ç°ÊÖÅÆÊôÓÚÄÄÒ»¸öÀà±ğ.
+/// ¾ÙÀıËµÃ÷£º¼ÙÉèplayer1 hole cardÎª'2',ÔÚprelop½áÊøºó·¢flop community cards,Õâ¸ö community cards¿ÉÄÜÊÇ'13','14','15','16','34','35','36','45'....£¨´ÓĞ¡µ½´óÅÅĞò£©µ±ÖĞÈÎºÎÒ»ÖÖ
+/// ¼ÙÉè·¢³öµÄÊÖÅÆÎª'13'ÄÇÃ´¼ÓÉÏÍæ¼ÒµÄhole cardµÃµ½µÄÀúÊ·ÊÖÅÆÎª'213'ÄÇÃ´mapcluster[213] = 0, mapcluster[215] = 2, mapcluster[234] = 4
 /// </summary>
 extern map<int, int> mapcluster;
 //pruning mccfr
 double mccfrp(strategy_node* cnode[], Pokerstate state, int pi, int c, mt19937_64 &_rng_gen);
-//pruning mccfrç®—æ³•,ä¸»è¦ç”¨äºåœ¨ä¸€å®šè¿­ä»£æ¬¡æ•°åï¼Œå¯¹åæ‚”å€¼å¤ªå¤§çš„åŠ¨ä½œä¸è¿›è¡Œéå†æ›´æ–°åæ‚”å€¼
+//pruning mccfrËã·¨,Ö÷ÒªÓÃÓÚÔÚÒ»¶¨µü´ú´ÎÊıºó£¬¶Ôºó»ÚÖµÌ«´óµÄ¶¯×÷²»½øĞĞ±éÀú¸üĞÂºó»ÚÖµ
 double mccfr(strategy_node* cnode[], Pokerstate& state, int pi, mt19937_64 &_rng_gen);
 /// <summary>
-/// prune mccfrç®—æ³•
+/// prune mccfrËã·¨
 /// </summary>
-/// <param name="cnode">åšå¼ˆæ ‘ä¸­å½“å‰èŠ‚ç‚¹ï¼Œå®ƒä»£è¡¨å½“å‰çš„ä¿¡æ¯é›†</param>
-/// <param name="state">æ ¹æ®åŠ¨ä½œåºåˆ—å¾—åˆ°å½“å‰æ¸¸æˆçš„çŠ¶æ€</param>
-/// <param name="pi">æ›´æ–°piç©å®¶çš„åŠ¨ä½œç­–ç•¥å³ä¾¿åˆ©piç©å®¶æ¯ä¸ªåŠ¨ä½œï¼Œæ ¹æ®å¯¹æ‰‹ç­–ç•¥é‡‡æ ·å¯¹æ‰‹çš„åŠ¨ä½œ</param>
-/// <param name="c">lazy mccfrçš„é˜ˆå€¼ï¼Œä¸€å®šè¿­ä»£æ¬¡æ•°åï¼Œåæ‚”å€¼å°äºcçš„åŠ¨ä½œä¸æ›´æ–°</param>
-/// <param name="_rng_gen">éšæœºæ•°äº§ç”Ÿå™¨ï¼Œä¸»è¦ç”¨äºäº§ç”Ÿéšæœºæ•°æ¥é‡‡ç”¨å¯¹æ‰‹çš„åŠ¨ä½œ</param>
+/// <param name="cnode">²©ŞÄÊ÷ÖĞµ±Ç°½Úµã£¬Ëü´ú±íµ±Ç°µÄĞÅÏ¢¼¯</param>
+/// <param name="state">¸ù¾İ¶¯×÷ĞòÁĞµÃµ½µ±Ç°ÓÎÏ·µÄ×´Ì¬</param>
+/// <param name="pi">¸üĞÂpiÍæ¼ÒµÄ¶¯×÷²ßÂÔ¼´±ãÀûpiÍæ¼ÒÃ¿¸ö¶¯×÷£¬¸ù¾İ¶ÔÊÖ²ßÂÔ²ÉÑù¶ÔÊÖµÄ¶¯×÷</param>
+/// <param name="c">lazy mccfrµÄãĞÖµ£¬Ò»¶¨µü´ú´ÎÊıºó£¬ºó»ÚÖµĞ¡ÓÚcµÄ¶¯×÷²»¸üĞÂ</param>
+/// <param name="_rng_gen">Ëæ»úÊı²úÉúÆ÷£¬Ö÷ÒªÓÃÓÚ²úÉúËæ»úÊıÀ´²ÉÓÃ¶ÔÊÖµÄ¶¯×÷</param>
 /// <returns>counterfactual value</returns>
 double mccfrp(strategy_node* cnode[],Pokerstate state,int pi,int c, mt19937_64 &_rng_gen) {		 
 	int ph = state.player_i_index;
-	if (state.is_ending()) {// åˆ¤æ–­æ˜¯å¦æ¸¸æˆç»“æŸ
-		return state.payout(pi); //è®¡ç®—å½“å‰piç©å®¶çš„æ”¶ç›Š
+	if (state.is_ending()) {// ÅĞ¶ÏÊÇ·ñÓÎÏ·½áÊø
+		return state.payout(pi); //¼ÆËãµ±Ç°piÍæ¼ÒµÄÊÕÒæ
 	}
 	else if (ph == pi) {
 		double sigma[4];
 		double vo = 0;  //expected counterfactual value
 
-		calculate_strategy(cnode[ph]->regret, cnode[ph]->action_len, sigma);//æ ¹æ®å½“å‰èŠ‚ç‚¹çš„åæ‚”å€¼è·å¾—ç©å®¶å½“å‰çš„ç­–ç•¥sigma[a]
-		int len = cnode[0]->action_len;			//å½“å‰ä¿¡æ¯é›†åˆä¸‹å¯ä»¥æ‰§è¡Œçš„åŠ¨ä½œé•¿åº¦
+		calculate_strategy(cnode[ph]->regret, cnode[ph]->action_len, sigma);//¸ù¾İµ±Ç°½ÚµãµÄºó»ÚÖµ»ñµÃÍæ¼Òµ±Ç°µÄ²ßÂÔsigma[a]
+		int len = cnode[0]->action_len;			//µ±Ç°ĞÅÏ¢¼¯ºÏÏÂ¿ÉÒÔÖ´ĞĞµÄ¶¯×÷³¤¶È
 		bool explored[4] = { false };
 		int voa[4] = { 0 };
 		for (int i = 0; i < len; i++) {
-			if (cnode[ph]->regret[i] > c) { //lazy mccfrçš„é˜ˆå€¼ï¼Œä¸€å®šè¿­ä»£æ¬¡æ•°åï¼Œåæ‚”å€¼å°äºcçš„åŠ¨ä½œä¸æ›´æ–°
+			if (cnode[ph]->regret[i] > c) { //lazy mccfrµÄãĞÖµ£¬Ò»¶¨µü´ú´ÎÊıºó£¬ºó»ÚÖµĞ¡ÓÚcµÄ¶¯×÷²»¸üĞÂ
 				Pokerstate st2 = state;
-				bool is_chance = st2.apply_action(cnode[ph]->actionstr[i]); //æ‰§è¡Œç¬¬iä¸ªlegal actionå¾—åˆ°ä¿¡æ¯æ¸¸æˆçŠ¶æ€ä¿¡æ¯st2
+				bool is_chance = st2.apply_action(cnode[ph]->actionstr[i]); //Ö´ĞĞµÚi¸ölegal actionµÃµ½ĞÅÏ¢ÓÎÏ·×´Ì¬ĞÅÏ¢st2
 				strategy_node* cnode2[2];
-				//player0æ‰§è¡ŒåŠ¨ä½œåå°±åˆ°è¾¾äº†æ–°çš„ä¿¡æ¯é›†ï¼Œå³èŠ‚ç‚¹cnode2[0]
+				//player0Ö´ĞĞ¶¯×÷ºó¾Íµ½´ïÁËĞÂµÄĞÅÏ¢¼¯£¬¼´½Úµãcnode2[0]
 				cnode2[0] = cnode[0]->findnode(cnode[ph]->actionstr[i]);
-				//player1æ‰§è¡ŒåŠ¨ä½œåå°±åˆ°è¾¾äº†æ–°çš„ä¿¡æ¯é›†ï¼Œå³èŠ‚ç‚¹cnode2[1]
+				//player1Ö´ĞĞ¶¯×÷ºó¾Íµ½´ïÁËĞÂµÄĞÅÏ¢¼¯£¬¼´½Úµãcnode2[1]
 				cnode2[1] = cnode[1]->findnode(cnode[ph]->actionstr[i]);
-				//åˆ¤æ–­æ‰§è¡Œå®ŒåŠ¨ä½œæ˜¯å¦åˆ°è¾¾chance node
+				//ÅĞ¶ÏÖ´ĞĞÍê¶¯×÷ÊÇ·ñµ½´ïchance node
 				if (is_chance) {
-					//å¦‚æœåˆ°è¾¾çš„chance nodeï¼Œæ ¹æ®å½“å‰çš„roundéšæœºå…¬å…±å‘ç‰Œï¼Œç»“åˆç©å®¶çš„hole cardå’Œå…¬å…±ç‰Œå¾—åˆ°æ‰‹ç‰Œä¿¡æ¯å†ä½¿ç”¨mapclusterå¯ä»¥å¾—åˆ°å½“å‰æ‰‹ç‰Œå±äºå“ªä¸€ç±»
-					//st2.table.players[0].clusters[st2.betting_stage]è¡¨ç¤ºplayer 0åœ¨å½“å‰st2.betting_stage çš„roundå±äºå“ªä¸€ç±»ï¼Œè¿™ä¸ªç±»ä¸pluribusä¸­200ç±»ä¸­ä¸€ç±»æ¦‚å¿µä¸€æ ·
+					//Èç¹ûµ½´ïµÄchance node£¬¸ù¾İµ±Ç°µÄroundËæ»ú¹«¹²·¢ÅÆ£¬½áºÏÍæ¼ÒµÄhole cardºÍ¹«¹²ÅÆµÃµ½ÊÖÅÆĞÅÏ¢ÔÙÊ¹ÓÃmapcluster¿ÉÒÔµÃµ½µ±Ç°ÊÖÅÆÊôÓÚÄÄÒ»Àà
+					//st2.table.players[0].clusters[st2.betting_stage]±íÊ¾player 0ÔÚµ±Ç°st2.betting_stage µÄroundÊôÓÚÄÄÒ»Àà£¬Õâ¸öÀàÓëpluribusÖĞ200ÀàÖĞÒ»Àà¸ÅÄîÒ»Ñù
 					cnode2[0] = (cnode2[0]->actions + st2.table.players[0].clusters[st2.betting_stage]);
 					cnode2[1] = (cnode2[1]->actions + st2.table.players[1].clusters[st2.betting_stage]);
 				}
-				voa[i] = mccfr(cnode2, st2, pi, _rng_gen); //æ±‚è§£å½“å‰åŠ¨ä½œu[a]çš„counterfactual regret value
+				voa[i] = mccfr(cnode2, st2, pi, _rng_gen); //Çó½âµ±Ç°¶¯×÷u[a]µÄcounterfactual regret value
 				explored[i] = true;
-				vo += sigma[i] * voa[i]; //æ±‚å½“å‰ä¿¡æ¯é›†ä¸‹expected counterfactual value
+				vo += sigma[i] * voa[i]; //Çóµ±Ç°ĞÅÏ¢¼¯ÏÂexpected counterfactual value
 			}
 			else
 				explored[i] = false;
 		}
 		for (int i = 0; i < len; i++)
 			if (explored[i])
-				cnode[ph]->regret[i] += voa[i] - vo;  //æ›´æ–°å½“å‰ä¿¡æ¯é›†ä¸‹æ¯ä¸ªåŠ¨ä½œçš„åæ‚”å€¼
+				cnode[ph]->regret[i] += voa[i] - vo;  //¸üĞÂµ±Ç°ĞÅÏ¢¼¯ÏÂÃ¿¸ö¶¯×÷µÄºó»ÚÖµ
 		return vo;
 	}
 	else {
 
 		double sigma[4];
-		calculate_strategy(cnode[ph]->regret, cnode[ph]->action_len, sigma);//æ ¹æ®å½“å‰èŠ‚ç‚¹çš„åæ‚”å€¼è·å¾—ç©å®¶å½“å‰çš„ç­–ç•¥sigma[a]
-		double randomc = std::generate_canonical<double, std::numeric_limits<double>::digits>(_rng_gen);//äº§ç”Ÿéšæœºæ•°
+		calculate_strategy(cnode[ph]->regret, cnode[ph]->action_len, sigma);//¸ù¾İµ±Ç°½ÚµãµÄºó»ÚÖµ»ñµÃÍæ¼Òµ±Ç°µÄ²ßÂÔsigma[a]
+		double randomc = std::generate_canonical<double, std::numeric_limits<double>::digits>(_rng_gen);//²úÉúËæ»úÊı
 		double ans = sigma[0];
 		int acti = 0;
-		while (ans < randomc && acti < cnode[ph]->action_len - 1)//é‡‡æ ·åŠ¨ä½œactiä¸ºå½“å‰legal actionä¸­é‡‡æ ·åˆ°ç¬¬actiä¸ªåŠ¨ä½œ
+		while (ans < randomc && acti < cnode[ph]->action_len - 1)//²ÉÑù¶¯×÷actiÎªµ±Ç°legal actionÖĞ²ÉÑùµ½µÚacti¸ö¶¯×÷
 			ans += sigma[++acti];
 		Pokerstate st2 = state;
-		bool is_chance = st2.apply_action(cnode[ph]->actionstr[acti]);//æ‰§è¡Œé‡‡æ ·åŠ¨ä½œå¾—åˆ°ä¿¡æ¯æ¸¸æˆçŠ¶æ€ä¿¡æ¯st2
+		bool is_chance = st2.apply_action(cnode[ph]->actionstr[acti]);//Ö´ĞĞ²ÉÑù¶¯×÷µÃµ½ĞÅÏ¢ÓÎÏ·×´Ì¬ĞÅÏ¢st2
 		strategy_node* cnode2[2];
-		//player0æ‰§è¡ŒåŠ¨ä½œåå°±åˆ°è¾¾äº†æ–°çš„ä¿¡æ¯é›†ï¼Œå³èŠ‚ç‚¹cnode2[0]
+		//player0Ö´ĞĞ¶¯×÷ºó¾Íµ½´ïÁËĞÂµÄĞÅÏ¢¼¯£¬¼´½Úµãcnode2[0]
 		cnode2[0] = cnode[0]->findnode(cnode[ph]->actionstr[acti]);
-		//player1æ‰§è¡ŒåŠ¨ä½œåå°±åˆ°è¾¾äº†æ–°çš„ä¿¡æ¯é›†ï¼Œå³èŠ‚ç‚¹cnode2[1]
+		//player1Ö´ĞĞ¶¯×÷ºó¾Íµ½´ïÁËĞÂµÄĞÅÏ¢¼¯£¬¼´½Úµãcnode2[1]
 		cnode2[1] = cnode[1]->findnode(cnode[ph]->actionstr[acti]);
-		//åˆ¤æ–­æ‰§è¡Œå®ŒåŠ¨ä½œæ˜¯å¦åˆ°è¾¾chance node
+		//ÅĞ¶ÏÖ´ĞĞÍê¶¯×÷ÊÇ·ñµ½´ïchance node
 		if (is_chance) {
-			//å¦‚æœåˆ°è¾¾çš„chance nodeï¼Œæ ¹æ®å½“å‰çš„roundéšæœºå…¬å…±å‘ç‰Œï¼Œç»“åˆç©å®¶çš„hole cardå’Œå…¬å…±ç‰Œå¾—åˆ°æ‰‹ç‰Œä¿¡æ¯å†ä½¿ç”¨mapclusterå¯ä»¥å¾—åˆ°å½“å‰æ‰‹ç‰Œå±äºå“ªä¸€ç±»
-			//st2.table.players[0].clusters[st2.betting_stage]è¡¨ç¤ºplayer 0åœ¨å½“å‰st2.betting_stage çš„roundå±äºå“ªä¸€ç±»ï¼Œè¿™ä¸ªç±»ä¸pluribusä¸­200ç±»ä¸­ä¸€ç±»æ¦‚å¿µä¸€æ ·
+			//Èç¹ûµ½´ïµÄchance node£¬¸ù¾İµ±Ç°µÄroundËæ»ú¹«¹²·¢ÅÆ£¬½áºÏÍæ¼ÒµÄhole cardºÍ¹«¹²ÅÆµÃµ½ÊÖÅÆĞÅÏ¢ÔÙÊ¹ÓÃmapcluster¿ÉÒÔµÃµ½µ±Ç°ÊÖÅÆÊôÓÚÄÄÒ»Àà
+			//st2.table.players[0].clusters[st2.betting_stage]±íÊ¾player 0ÔÚµ±Ç°st2.betting_stage µÄroundÊôÓÚÄÄÒ»Àà£¬Õâ¸öÀàÓëpluribusÖĞ200ÀàÖĞÒ»Àà¸ÅÄîÒ»Ñù
 			cnode2[0] = (cnode2[0]->actions + st2.table.players[0].clusters[st2.betting_stage]);
 			cnode2[1] = (cnode2[1]->actions + st2.table.players[1].clusters[st2.betting_stage]);
 		}
-		double tmp = mccfrp(cnode2, st2, pi,c, _rng_gen); //è®¡ç®—å½“å‰é‡‡æ ·åŠ¨ä½œçš„counterfactual value
+		double tmp = mccfrp(cnode2, st2, pi,c, _rng_gen); //¼ÆËãµ±Ç°²ÉÑù¶¯×÷µÄcounterfactual value
 		return tmp;
 	}
 }
 /// <summary>
-/// mccfrç®—æ³•
+/// mccfrËã·¨
 /// </summary>
-/// <param name="cnode">åšå¼ˆæ ‘ä¸­å½“å‰èŠ‚ç‚¹ï¼Œå®ƒä»£è¡¨å½“å‰çš„ä¿¡æ¯é›†</param>
-/// <param name="state">æ ¹æ®åŠ¨ä½œåºåˆ—å¾—åˆ°å½“å‰æ¸¸æˆçš„çŠ¶æ€</param>
-/// <param name="pi">æ›´æ–°piç©å®¶çš„åŠ¨ä½œç­–ç•¥å³ä¾¿åˆ©piç©å®¶æ¯ä¸ªåŠ¨ä½œï¼Œæ ¹æ®å¯¹æ‰‹ç­–ç•¥é‡‡æ ·å¯¹æ‰‹çš„åŠ¨ä½œ</param>
-/// <param name="_rng_gen">éšæœºæ•°äº§ç”Ÿå™¨ï¼Œä¸»è¦ç”¨äºäº§ç”Ÿéšæœºæ•°æ¥é‡‡ç”¨å¯¹æ‰‹çš„åŠ¨ä½œ</param>
+/// <param name="cnode">²©ŞÄÊ÷ÖĞµ±Ç°½Úµã£¬Ëü´ú±íµ±Ç°µÄĞÅÏ¢¼¯</param>
+/// <param name="state">¸ù¾İ¶¯×÷ĞòÁĞµÃµ½µ±Ç°ÓÎÏ·µÄ×´Ì¬</param>
+/// <param name="pi">¸üĞÂpiÍæ¼ÒµÄ¶¯×÷²ßÂÔ¼´±ãÀûpiÍæ¼ÒÃ¿¸ö¶¯×÷£¬¸ù¾İ¶ÔÊÖ²ßÂÔ²ÉÑù¶ÔÊÖµÄ¶¯×÷</param>
+/// <param name="_rng_gen">Ëæ»úÊı²úÉúÆ÷£¬Ö÷ÒªÓÃÓÚ²úÉúËæ»úÊıÀ´²ÉÓÃ¶ÔÊÖµÄ¶¯×÷</param>
 /// <returns>counterfactual value</returns>
 double mccfr(strategy_node* cnode[], Pokerstate& state, int pi, mt19937_64 &_rng_gen) { // mccfr
 	int ph = state.player_i_index;
-	if (state.is_ending()){// åˆ¤æ–­æ˜¯å¦æ¸¸æˆç»“æŸ
-		return state.payout(pi);//è®¡ç®—å½“å‰piç©å®¶çš„æ”¶ç›Š
+	if (state.is_ending()){// ÅĞ¶ÏÊÇ·ñÓÎÏ·½áÊø
+		return state.payout(pi);//¼ÆËãµ±Ç°piÍæ¼ÒµÄÊÕÒæ
 	}
 	else if (ph == pi) {
 		double sigma[4];
 		double vo = 0;			//expected counterfactual value
-		calculate_strategy(cnode[ph]->regret, cnode[ph]->action_len, sigma);//æ ¹æ®å½“å‰èŠ‚ç‚¹çš„åæ‚”å€¼è·å¾—ç©å®¶å½“å‰çš„ç­–ç•¥sigma[a]
-		int len = cnode[0]->action_len;		//å½“å‰ä¿¡æ¯é›†åˆä¸‹å¯ä»¥æ‰§è¡Œçš„åŠ¨ä½œé•¿åº¦
+		calculate_strategy(cnode[ph]->regret, cnode[ph]->action_len, sigma);//¸ù¾İµ±Ç°½ÚµãµÄºó»ÚÖµ»ñµÃÍæ¼Òµ±Ç°µÄ²ßÂÔsigma[a]
+		int len = cnode[0]->action_len;		//µ±Ç°ĞÅÏ¢¼¯ºÏÏÂ¿ÉÒÔÖ´ĞĞµÄ¶¯×÷³¤¶È
 		int voa[4] = { 0 };
 		for (int i = 0; i < len; i++) {
 			Pokerstate st2 = state;
-			bool is_chance = st2.apply_action(cnode[ph]->actionstr[i]);//æ‰§è¡Œç¬¬iä¸ªlegal actionå¾—åˆ°ä¿¡æ¯æ¸¸æˆçŠ¶æ€ä¿¡æ¯st2
+			bool is_chance = st2.apply_action(cnode[ph]->actionstr[i]);//Ö´ĞĞµÚi¸ölegal actionµÃµ½ĞÅÏ¢ÓÎÏ·×´Ì¬ĞÅÏ¢st2
 			strategy_node* cnode2[2];
-			//player0æ‰§è¡ŒåŠ¨ä½œåå°±åˆ°è¾¾äº†æ–°çš„ä¿¡æ¯é›†ï¼Œå³èŠ‚ç‚¹cnode2[0]
+			//player0Ö´ĞĞ¶¯×÷ºó¾Íµ½´ïÁËĞÂµÄĞÅÏ¢¼¯£¬¼´½Úµãcnode2[0]
 			cnode2[0] = cnode[0]->findnode(cnode[ph]->actionstr[i]);
-			//player1æ‰§è¡ŒåŠ¨ä½œåå°±åˆ°è¾¾äº†æ–°çš„ä¿¡æ¯é›†ï¼Œå³èŠ‚ç‚¹cnode2[1]
+			//player1Ö´ĞĞ¶¯×÷ºó¾Íµ½´ïÁËĞÂµÄĞÅÏ¢¼¯£¬¼´½Úµãcnode2[1]
 			cnode2[1] = cnode[1]->findnode(cnode[ph]->actionstr[i]);
-			//åˆ¤æ–­æ‰§è¡Œå®ŒåŠ¨ä½œæ˜¯å¦åˆ°è¾¾chance node
+			//ÅĞ¶ÏÖ´ĞĞÍê¶¯×÷ÊÇ·ñµ½´ïchance node
 			if (is_chance) {
-				//å¦‚æœåˆ°è¾¾çš„chance nodeï¼Œæ ¹æ®å½“å‰çš„roundéšæœºå…¬å…±å‘ç‰Œï¼Œç»“åˆç©å®¶çš„hole cardå’Œå…¬å…±ç‰Œå¾—åˆ°æ‰‹ç‰Œä¿¡æ¯å†ä½¿ç”¨mapclusterå¯ä»¥å¾—åˆ°å½“å‰æ‰‹ç‰Œå±äºå“ªä¸€ç±»
-				//st2.table.players[0].clusters[st2.betting_stage]è¡¨ç¤ºplayer 0åœ¨å½“å‰st2.betting_stage çš„roundå±äºå“ªä¸€ç±»ï¼Œè¿™ä¸ªç±»ä¸pluribusä¸­200ç±»ä¸­ä¸€ç±»æ¦‚å¿µä¸€æ ·
+				//Èç¹ûµ½´ïµÄchance node£¬¸ù¾İµ±Ç°µÄroundËæ»ú¹«¹²·¢ÅÆ£¬½áºÏÍæ¼ÒµÄhole cardºÍ¹«¹²ÅÆµÃµ½ÊÖÅÆĞÅÏ¢ÔÙÊ¹ÓÃmapcluster¿ÉÒÔµÃµ½µ±Ç°ÊÖÅÆÊôÓÚÄÄÒ»Àà
+				//st2.table.players[0].clusters[st2.betting_stage]±íÊ¾player 0ÔÚµ±Ç°st2.betting_stage µÄroundÊôÓÚÄÄÒ»Àà£¬Õâ¸öÀàÓëpluribusÖĞ200ÀàÖĞÒ»Àà¸ÅÄîÒ»Ñù
 				cnode2[0] = (cnode2[0]->actions + st2.table.players[0].clusters[st2.betting_stage]);
 				cnode2[1] = (cnode2[1]->actions + st2.table.players[1].clusters[st2.betting_stage]);
 			}
-			voa[i] = mccfr(cnode2, st2, pi, _rng_gen); //æ±‚è§£å½“å‰åŠ¨ä½œu[a]çš„counterfactual regret value
-			vo += sigma[i] * voa[i];			//æ±‚å½“å‰ä¿¡æ¯é›†ä¸‹expected counterfactual value
+			voa[i] = mccfr(cnode2, st2, pi, _rng_gen); //Çó½âµ±Ç°¶¯×÷u[a]µÄcounterfactual regret value
+			vo += sigma[i] * voa[i];			//Çóµ±Ç°ĞÅÏ¢¼¯ÏÂexpected counterfactual value
 		}
 		for (int i = 0; i < len; i++) 
-			cnode[ph]->regret[i]+= voa[i] - vo;	//æ›´æ–°å½“å‰ä¿¡æ¯é›†ä¸‹æ¯ä¸ªåŠ¨ä½œçš„åæ‚”å€¼
+			cnode[ph]->regret[i]+= voa[i] - vo;	//¸üĞÂµ±Ç°ĞÅÏ¢¼¯ÏÂÃ¿¸ö¶¯×÷µÄºó»ÚÖµ
 		return vo;
 	}
 	else {
 		double sigma[4];
-		calculate_strategy(cnode[ph]->regret, cnode[ph]->action_len, sigma); //æ ¹æ®å½“å‰èŠ‚ç‚¹çš„åæ‚”å€¼è·å¾—ç©å®¶å½“å‰çš„ç­–ç•¥sigma[a]
-		double randomc = std::generate_canonical<double, std::numeric_limits<double>::digits>(_rng_gen);//äº§ç”Ÿéšæœºæ•°
+		calculate_strategy(cnode[ph]->regret, cnode[ph]->action_len, sigma); //¸ù¾İµ±Ç°½ÚµãµÄºó»ÚÖµ»ñµÃÍæ¼Òµ±Ç°µÄ²ßÂÔsigma[a]
+		double randomc = std::generate_canonical<double, std::numeric_limits<double>::digits>(_rng_gen);//²úÉúËæ»úÊı
 		double ans = sigma[0];
 		int acti = 0;
-		while (ans < randomc && acti < cnode[ph]->action_len - 1)//é‡‡æ ·åŠ¨ä½œactiä¸ºå½“å‰legal actionä¸­é‡‡æ ·åˆ°ç¬¬actiä¸ªåŠ¨ä½œ
+		while (ans < randomc && acti < cnode[ph]->action_len - 1)//²ÉÑù¶¯×÷actiÎªµ±Ç°legal actionÖĞ²ÉÑùµ½µÚacti¸ö¶¯×÷
 			ans += sigma[++acti];
 		Pokerstate st2 = state;
-		bool is_chance = st2.apply_action(cnode[ph]->actionstr[acti]);//æ‰§è¡Œé‡‡æ ·åŠ¨ä½œå¾—åˆ°ä¿¡æ¯æ¸¸æˆçŠ¶æ€ä¿¡æ¯st2
+		bool is_chance = st2.apply_action(cnode[ph]->actionstr[acti]);//Ö´ĞĞ²ÉÑù¶¯×÷µÃµ½ĞÅÏ¢ÓÎÏ·×´Ì¬ĞÅÏ¢st2
 		strategy_node* cnode2[2];
-		//player0æ‰§è¡ŒåŠ¨ä½œåå°±åˆ°è¾¾äº†æ–°çš„ä¿¡æ¯é›†ï¼Œå³èŠ‚ç‚¹cnode2[0]
+		//player0Ö´ĞĞ¶¯×÷ºó¾Íµ½´ïÁËĞÂµÄĞÅÏ¢¼¯£¬¼´½Úµãcnode2[0]
 		cnode2[0] = cnode[0]->findnode(cnode[ph]->actionstr[acti]);
-		//player1æ‰§è¡ŒåŠ¨ä½œåå°±åˆ°è¾¾äº†æ–°çš„ä¿¡æ¯é›†ï¼Œå³èŠ‚ç‚¹cnode2[1]
+		//player1Ö´ĞĞ¶¯×÷ºó¾Íµ½´ïÁËĞÂµÄĞÅÏ¢¼¯£¬¼´½Úµãcnode2[1]
 		cnode2[1] = cnode[1]->findnode(cnode[ph]->actionstr[acti]);
 		if (is_chance) {
-			//å¦‚æœåˆ°è¾¾çš„chance nodeï¼Œæ ¹æ®å½“å‰çš„roundéšæœºå…¬å…±å‘ç‰Œï¼Œç»“åˆç©å®¶çš„hole cardå’Œå…¬å…±ç‰Œå¾—åˆ°æ‰‹ç‰Œä¿¡æ¯å†ä½¿ç”¨mapclusterå¯ä»¥å¾—åˆ°å½“å‰æ‰‹ç‰Œå±äºå“ªä¸€ç±»
-			//st2.table.players[0].clusters[st2.betting_stage]è¡¨ç¤ºplayer 0åœ¨å½“å‰st2.betting_stage çš„roundå±äºå“ªä¸€ç±»ï¼Œè¿™ä¸ªç±»ä¸pluribusä¸­200ç±»ä¸­ä¸€ç±»æ¦‚å¿µä¸€æ ·
+			//Èç¹ûµ½´ïµÄchance node£¬¸ù¾İµ±Ç°µÄroundËæ»ú¹«¹²·¢ÅÆ£¬½áºÏÍæ¼ÒµÄhole cardºÍ¹«¹²ÅÆµÃµ½ÊÖÅÆĞÅÏ¢ÔÙÊ¹ÓÃmapcluster¿ÉÒÔµÃµ½µ±Ç°ÊÖÅÆÊôÓÚÄÄÒ»Àà
+			//st2.table.players[0].clusters[st2.betting_stage]±íÊ¾player 0ÔÚµ±Ç°st2.betting_stage µÄroundÊôÓÚÄÄÒ»Àà£¬Õâ¸öÀàÓëpluribusÖĞ200ÀàÖĞÒ»Àà¸ÅÄîÒ»Ñù
 			cnode2[0] = (cnode2[0]->actions + st2.table.players[0].clusters[st2.betting_stage]);
 			cnode2[1] = (cnode2[1]->actions + st2.table.players[1].clusters[st2.betting_stage]);
 		}
-		double tmp = mccfr(cnode2, st2, pi, _rng_gen); //è®¡ç®—å½“å‰é‡‡æ ·åŠ¨ä½œçš„counterfactual value
+		double tmp = mccfr(cnode2, st2, pi, _rng_gen); //¼ÆËãµ±Ç°²ÉÑù¶¯×÷µÄcounterfactual value
 		return tmp;
 	}
 }
 /// <summary>
-/// Linear MCCFR discount functionï¼Œå¯¹åšå¼ˆæ ‘ä¸­æ¯ä¸ªèŠ‚ç‚¹ä¸­æ¯ä¸ªåŠ¨ä½œåæ‚”å€¼discount d
+/// Linear MCCFR discount function£¬¶Ô²©ŞÄÊ÷ÖĞÃ¿¸ö½ÚµãÖĞÃ¿¸ö¶¯×÷ºó»ÚÖµdiscount d
 /// </summary>
 /// <param name="cnode">current discounted node</param>
 /// <param name="d">discount factor d</param>
@@ -186,12 +186,12 @@ void dfs_discount(strategy_node* cnode, double d) {
 		}
 }
 /// <summary>
-/// n_iterations: è¿­ä»£æ¬¡æ•°
-/// lcfr_threshold: è¿­ä»£å‰lcfr_thresholdæ¬¡æ•°ä½¿ç”¨Linear MCCFRæ¥discount regret value
-/// discount_interval: æ¯é—´éš”discount_intervalè¿™ä¸ªåŒºé—´çš„è¿­ä»£æ¬¡æ•°æ¥å¯¹æ•´é¢—åšå¼ˆæ ‘discount regret value
-/// prune_threshold: lazy mccfrï¼Œåœ¨è¿­ä»£prune_thresholdæ¬¡æ•°åæœ‰95%æ¦‚ç‡å»ä½¿ç”¨prune mccfræ›´æ–°ç­–ç•¥ï¼Œå®ƒä¸å¯¹åæ‚”å€¼å°äºc = -2000000çš„èŠ‚ç‚¹è¿›è¡Œä¾¿åˆ©æ›´æ–°
-/// n_players: ç©å®¶ä¸ªæ•°
-/// dump_iteration: æ¯è¿­ä»£dump_iterationé—´éš”ä¿å­˜ä¸€æ¬¡åšå¼ˆæ ‘çš„ç­–ç•¥
+/// n_iterations: µü´ú´ÎÊı
+/// lcfr_threshold: µü´úÇ°lcfr_threshold´ÎÊıÊ¹ÓÃLinear MCCFRÀ´discount regret value
+/// discount_interval: Ã¿¼ä¸ôdiscount_intervalÕâ¸öÇø¼äµÄµü´ú´ÎÊıÀ´¶ÔÕû¿Å²©ŞÄÊ÷discount regret value
+/// prune_threshold: lazy mccfr£¬ÔÚµü´úprune_threshold´ÎÊıºóÓĞ95%¸ÅÂÊÈ¥Ê¹ÓÃprune mccfr¸üĞÂ²ßÂÔ£¬Ëü²»¶Ôºó»ÚÖµĞ¡ÓÚc = -2000000µÄ½Úµã½øĞĞ±ãÀû¸üĞÂ
+/// n_players: Íæ¼Ò¸öÊı
+/// dump_iteration: Ã¿µü´údump_iteration¼ä¸ô±£´æÒ»´Î²©ŞÄÊ÷µÄ²ßÂÔ
 /// </summary>
 const int n_iterations = 1500000, lcfr_threshold = 1000000, discount_interval = 50;
 const int prune_threshold = 200000, c = -2000000, n_players = 2, dump_iteration = 100000;
@@ -207,61 +207,61 @@ kill pid
 */
 
 /// <summary>
-/// è®­ç»ƒé€»è¾‘ï¼š
-/// ä¸€ï¼šé¦–å…ˆåˆå§‹åŒ–æ¸¸æˆçŠ¶æ€ï¼ŒåŒ…æ‹¬shuffle deckï¼Œ åˆå§‹åŒ–ç©å®¶ç­¹ç chips=initialï¼Œpot = 0ç­‰ä¿¡æ¯
-/// ç„¶åç»™æ¯ä¸ªç©å®¶å‘hole cardå’Œæå‰å‘å®Œ4å¼ å…¬å…±ç‰Œï¼Œä½†æ˜¯æ¸¸æˆåªæœ‰åˆ°è¾¾ç›¸åº”çš„roundæ‰ä¼šçœ‹å¾—åˆ°å…¬å…±ç‰Œ
-/// è¿™æ ·å°±èƒ½æå‰è®¡ç®—å¥½æ¯ä¸ªç©å®¶åˆ°flopè½®æˆ–è€…turnè½®æ—¶å€™æ‰‹ç‰Œå±äºå“ªä¸€ç±»ï¼Œä¸ç”¨å®é™…ä¸Šåˆ°é‚£ä¸€è½®æ‰å¼€å§‹å‘ç‰Œç„¶åè®¡ç®—æ‰‹ç‰Œå±äºå“ªä¸€ç±»ã€‚æå‰è®¡ç®—å¥½å…¬å…±ç‰Œå±äºå“ªä¸€ç±»åˆ°åˆ°è¾¾roundåç›´æ¥ä½¿ç”¨ã€‚
-/// äºŒï¼šæ ¹æ®æ„å»ºå¥½çš„åšå¼ˆæ ‘ï¼Œè¯¥åšå¼ˆæ ‘åœ¨æ¯ä¸ªèŠ‚ç‚¹å·²ç»åŒ…å«å½“å‰ä¿¡æ¯é›†ä¸‹å¯ä»¥é‡‡å–çš„åŠ¨ä½œã€‚
-/// é‚£ä¹ˆåªè¦éå†åŠ¨ä½œï¼Œæ›´æ–°æ¸¸æˆçŠ¶æ€ï¼Œç›´åˆ°æ¸¸æˆç»“æŸï¼Œç„¶åè®¡ç®—æ¸¸æˆç»“æœæ”¶ç›Šï¼Œå†æ›´æ–°è·¯å¾„ä¸ŠåŠ¨ä½œçš„åæ‚”å€¼ã€‚
+/// ÑµÁ·Âß¼­£º
+/// Ò»£ºÊ×ÏÈ³õÊ¼»¯ÓÎÏ·×´Ì¬£¬°üÀ¨shuffle deck£¬ ³õÊ¼»¯Íæ¼Ò³ïÂëchips=initial£¬pot = 0µÈĞÅÏ¢
+/// È»ºó¸øÃ¿¸öÍæ¼Ò·¢hole cardºÍÌáÇ°·¢Íê4ÕÅ¹«¹²ÅÆ£¬µ«ÊÇÓÎÏ·Ö»ÓĞµ½´ïÏàÓ¦µÄround²Å»á¿´µÃµ½¹«¹²ÅÆ
+/// ÕâÑù¾ÍÄÜÌáÇ°¼ÆËãºÃÃ¿¸öÍæ¼Òµ½flopÂÖ»òÕßturnÂÖÊ±ºòÊÖÅÆÊôÓÚÄÄÒ»Àà£¬²»ÓÃÊµ¼ÊÉÏµ½ÄÇÒ»ÂÖ²Å¿ªÊ¼·¢ÅÆÈ»ºó¼ÆËãÊÖÅÆÊôÓÚÄÄÒ»Àà¡£ÌáÇ°¼ÆËãºÃ¹«¹²ÅÆÊôÓÚÄÄÒ»Ààµ½µ½´ïroundºóÖ±½ÓÊ¹ÓÃ¡£
+/// ¶ş£º¸ù¾İ¹¹½¨ºÃµÄ²©ŞÄÊ÷£¬¸Ã²©ŞÄÊ÷ÔÚÃ¿¸ö½ÚµãÒÑ¾­°üº¬µ±Ç°ĞÅÏ¢¼¯ÏÂ¿ÉÒÔ²ÉÈ¡µÄ¶¯×÷¡£
+/// ÄÇÃ´Ö»Òª±éÀú¶¯×÷£¬¸üĞÂÓÎÏ·×´Ì¬£¬Ö±µ½ÓÎÏ·½áÊø£¬È»ºó¼ÆËãÓÎÏ·½á¹ûÊÕÒæ£¬ÔÙ¸üĞÂÂ·¾¶ÉÏ¶¯×÷µÄºó»ÚÖµ¡£
 /// </summary>
 /// <returns></returns>
 int main() {			//program exit
 	mapcluster.clear();
-	///åˆå§‹åŒ–æ¸¸æˆçŠ¶æ€ä¿¡æ¯state
-	//æ¸¸æˆæ¡Œé¢æœ‰ä¸¤ä¸ªç©å®¶ 0å·ç©å®¶æœ‰400ç­¹ç ï¼Œ1å·ç©å®¶æœ‰400ç­¹ç 
+	///³õÊ¼»¯ÓÎÏ·×´Ì¬ĞÅÏ¢state
+	//ÓÎÏ·×ÀÃæÓĞÁ½¸öÍæ¼Ò 0ºÅÍæ¼ÒÓĞ400³ïÂë£¬1ºÅÍæ¼ÒÓĞ400³ïÂë
 	Player players[] = { Player(0, 400),Player(1, 400) };
 	PokerTable table(2,players);
-	Engine* engine = new Engine();	//æ¸¸æˆå¼•æ“ï¼Œä¸ºäº†è®¡ç®—æ¸¸æˆç»“æœè¾“èµ¢
+	Engine* engine = new Engine();	//ÓÎÏ·ÒıÇæ£¬ÎªÁË¼ÆËãÓÎÏ·½á¹ûÊäÓ®
 	Pokerstate state(table, engine, &mapcluster);
 	state.reset_game_single();
 
-	//pref[0]è¡¨ç¤ºplayer0æ‰€å¤„çš„ä¿¡æ¯é›†
-	//pref[1]è¡¨ç¤ºplayer1æ‰€å¤„çš„ä¿¡æ¯é›†
+	//pref[0]±íÊ¾player0Ëù´¦µÄĞÅÏ¢¼¯
+	//pref[1]±íÊ¾player1Ëù´¦µÄĞÅÏ¢¼¯
 	strategy_node* pref[2];
 
-	//åˆ›å»ºæ ¹èŠ‚ç‚¹
+	//´´½¨¸ù½Úµã
 	strategy_node* root = new strategy_node();
 
-	//æ„å»ºæ•´é¢—åšå¼ˆæ ‘
+	//¹¹½¨Õû¿Å²©ŞÄÊ÷
 	bulid_preflop(root, state);
 
 
-	Randint randi; //éšæœºæ•°äº§ç”Ÿå™¨ï¼Œä¸»è¦ç”Ÿæˆéšæœºç§å­
+	Randint randi; //Ëæ»úÊı²úÉúÆ÷£¬Ö÷ÒªÉú³ÉËæ»úÖÖ×Ó
 	for (int t = 1; t <= n_iterations; t++) {
-		if (t % 10000 == 0) {	//æ¯é—´éš”10000æ¬¡é‡ç½®éšæœºæ•°äº§ç”Ÿå™¨
+		if (t % 10000 == 0) {	//Ã¿¼ä¸ô10000´ÎÖØÖÃËæ»úÊı²úÉúÆ÷
 			randi.reset();
 			cout << "iter:" << t <<endl;
 		}
-		mt19937_64 _rng_gen(randi._rand());	//ç±»ä¼¼cè¯­è¨€srand(time(0))ï¼Œæ ¹æ®éšæœºç§å­äº§ç”Ÿéšæœºå¼•æ“
-		state.reset_game_single();			//é‡ç½®æ¸¸æˆçŠ¶æ€ï¼ŒåŒ…æ‹¬é‡æ–°å‘players hole card,community cardså’Œé‡æ–°è®¡ç®—æ¯ä¸ªç©å®¶åœ¨æ¯ä¸€è½®ç»“åˆå…¬å…±ç‰Œå±äºå“ªä¸€ç±»
+		mt19937_64 _rng_gen(randi._rand());	//ÀàËÆcÓïÑÔsrand(time(0))£¬¸ù¾İËæ»úÖÖ×Ó²úÉúËæ»úÒıÇæ
+		state.reset_game_single();			//ÖØÖÃÓÎÏ·×´Ì¬£¬°üÀ¨ÖØĞÂ·¢players hole card,community cardsºÍÖØĞÂ¼ÆËãÃ¿¸öÍæ¼ÒÔÚÃ¿Ò»ÂÖ½áºÏ¹«¹²ÅÆÊôÓÚÄÄÒ»Àà
 
 		for (int i = 0; i < n_players; i++) {
-			state.reset_game();				//é‡ç½®æ¸¸æˆçŠ¶æ€ï¼Œä¸éœ€è¦é‡æ–°å‘players hole card,community cardså’Œé‡æ–°è®¡ç®—æ¯ä¸ªç©å®¶åœ¨æ¯ä¸€è½®ç»“åˆå…¬å…±ç‰Œå±äºå“ªä¸€ç±»
-			//å½“å‰ä¸ºchance nodeï¼Œæ ¹æ®æ¯ä¸ªplayerçš„hole cardï¼Œä½¿ç”¨mapclusterå¯ä»¥å¾—åˆ°å½“å‰æ‰‹ç‰Œå±äºå“ªä¸€ç±»,ç±»ä¼¼pluribusç¬¬ä¸€è½®æœ‰1326ä¸ªç±»åˆ«ï¼Œå½“å‰æ‰‹ç‰Œå±äºå…¶ä¸­ä¸€ç±»
-			//state.table.players[0].clusters[0]è¡¨ç¤ºplayer 0åœ¨prflop(ç¬¬0ä¸ªround)æ‰‹ç‰Œå±äºå“ªä¸€ç±»ï¼Œè¿™ä¸ªç±»ä¸pluribusä¸­ç¬¬ä¸€è½®æœ‰1326ä¸ªç±»æ¦‚å¿µä¸€æ ·
+			state.reset_game();				//ÖØÖÃÓÎÏ·×´Ì¬£¬²»ĞèÒªÖØĞÂ·¢players hole card,community cardsºÍÖØĞÂ¼ÆËãÃ¿¸öÍæ¼ÒÔÚÃ¿Ò»ÂÖ½áºÏ¹«¹²ÅÆÊôÓÚÄÄÒ»Àà
+			//µ±Ç°Îªchance node£¬¸ù¾İÃ¿¸öplayerµÄhole card£¬Ê¹ÓÃmapcluster¿ÉÒÔµÃµ½µ±Ç°ÊÖÅÆÊôÓÚÄÄÒ»Àà,ÀàËÆpluribusµÚÒ»ÂÖÓĞ1326¸öÀà±ğ£¬µ±Ç°ÊÖÅÆÊôÓÚÆäÖĞÒ»Àà
+			//state.table.players[0].clusters[0]±íÊ¾player 0ÔÚprflop(µÚ0¸öround)ÊÖÅÆÊôÓÚÄÄÒ»Àà£¬Õâ¸öÀàÓëpluribusÖĞµÚÒ»ÂÖÓĞ1326¸öÀà¸ÅÄîÒ»Ñù
 			pref[0] = (root->actions + state.table.players[0].clusters[0]);
 			pref[1] = (root->actions + state.table.players[1].clusters[0]);
 			mccfr(pref, state, i, _rng_gen);
 		}
-		//ä¸€å®šé—´éš”ä½¿ç”¨Linear MCCFR to discount regret value
+		//Ò»¶¨¼ä¸ôÊ¹ÓÃLinear MCCFR to discount regret value
 		if (t < lcfr_threshold && t % discount_interval == 0) {
 			double d = ((double)t / discount_interval) / (((double)t / discount_interval) + 1);
 			dfs_discount(root, d);
 		}
 	}
-	//å¯è§†åŒ–åšå¼ˆæ ‘
+	//¿ÉÊÓ»¯²©ŞÄÊ÷
 	visualization(root, "blueprint_sim.stgy");
-	//è®¡ç®—å¯åˆ©ç”¨åº¦
+	//¼ÆËã¿ÉÀûÓÃ¶È
 	for (int i = 0; i < 2; i++) {
 		Sim_State simstate((!i) * 50 + 50);
 		cout << exploit(root, i, simstate) << endl;
