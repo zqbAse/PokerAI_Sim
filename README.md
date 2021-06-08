@@ -6,7 +6,7 @@
   * Chance Sampling
 * The simple Poke rule:
   * the game contain 6 cards(1,2,3,4,5,6)
-  * the game take action rule is the same as Holdem, actions contain 'd'(flod),'l'(call),'n'(allin)..
+  * the game take action rule is the same as Holdem, actions contain 'd'(flod),'l'(call),'n'(allin).
   * The game is divided into three rounds:
     * In every round, one 'fold' lead to the game ending, and all players take 'call' action, which is simular to Holdem.
     * first round: every player have one hole card and they interactively take action.
