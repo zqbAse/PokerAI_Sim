@@ -1,19 +1,13 @@
-# Poker Agent using MCCFR
+# Training Blueprint and Evaluation By MCCFR
+We provide a simple example of Leduc Poker about how to build a game tree, how to use MCCFR algorithms to get the Nash equilibrium strategy, and how to evaluate the strategy exploitability by the best response algorithm.
 
-* Trains strategies for a simple Poker
+![百度](img/partoftree.png)
+
+## Leduc Poker Agent Using MCCFR
+
 * Supported Training methods:
   * External Sampling
   * Chance Sampling
-* The simple Poke rule:
-  * the game contain 6 cards(1,2,3,4,5,6)
-  * the game take action rule is the same as Holdem, actions contain 'd'(flod),'l'(call),'n'(allin).
-  * The game is divided into three rounds:
-    * In every round, one 'fold' lead to the game ending, and all players take 'call' action, which is simular to Holdem.
-    * first round: every player have one hole card and they interactively take action.
-    * second round: deal two community cards and they interactively take action by Holdem rule.
-    * third round : deal one community card. If all player call. The player who have highest hand strength win all pot.
-    * hand strength: every player combine one his one hole card with three community cards as the total of four cards.Hand strength is the max hand strength of three cards selected from the four cards.
-    (456 > 345 > 234 > 123 > 6 > 5 > 4 > 3 > 2 > 1) 
 
 ## Requirements
 * For C++11 support
@@ -31,6 +25,7 @@ $ cd zqbAse/PokerAI_Sim
 $ g++ blueprint.cpp -o blueprint.o -std=c++11
 $ ./blueprint.o
 ```
+
 
 ## Project Frameworks
 ```
@@ -100,12 +95,3 @@ $ cd GraphViz/bin
 $ dot -Tpng blueprint_sim.stgy > temp.png
 ```
 * temp.png is the game tree.
-## Part of Tree for player 0 exploiting player 1
-![百度](img/partoftree.png)
-* red node is new round node by dealing card from chance node. 
-* black and red node is player 0 who need to take action.
-* blue is player 1 who need to take action.
-* the value in the node is best response value for player 1.
-* red node '1243' is current player hole card '1',flop community cards'24',turn community cards'3'.
-* 'd':fold,'l':call,'n':allin.
-* the number of edge is the possibilitiy of the action. 100 is 100%, 50 is 50%.
