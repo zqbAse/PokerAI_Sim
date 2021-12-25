@@ -1,4 +1,4 @@
-# Training Blueprint and Evaluation By MCCFR
+# Training Blueprint and Exploitability Evaluation
 We provide a simple example of Leduc Poker about how to build a game tree, how to use MCCFR algorithms to get the Nash equilibrium strategy, and how to evaluate the strategy exploitability by the best response algorithm.
 
 ![百度](img/partoftree.png)
