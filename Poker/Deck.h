@@ -27,11 +27,13 @@ public:
 		cur_index = 0;
 		for (int i = 0; i < card_rule_len; i++)
 			cards[i] = i;
-		//srand((unsigned)time(NULL));
+		struct timeval ti;
+		gettimeofday(&ti, NULL);
+		srand((unsigned)(ti.tv_sec + ti.tv_usec));
 		for (int i = 0; i < card_rule_len; i++)
-			swap(cards[i], cards[randi._rand() % card_rule_len]);
+			swap(cards[i], cards[rand() % card_rule_len]);
 		for (int i = 0; i < card_rule_len; i++)
-			swap(cards[i], cards[randi._rand() % card_rule_len]);
+			swap(cards[i], cards[rand() % card_rule_len]);
 	}
 	/*void println() {
 		cout << "deck index:" << cur_index << endl;
